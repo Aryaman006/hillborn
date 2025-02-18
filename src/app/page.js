@@ -22,7 +22,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
    useEffect(() => {
-      console.log("enter");
+      console.log("hello");
     
       const params = new URLSearchParams(window.location.search);
       const status = params.get("status");
