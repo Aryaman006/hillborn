@@ -1,8 +1,39 @@
+name: Deploy Frontend to VPS
+
+on:
+  push:
+    branches:
+      - main  # Trigger the pipeline on push to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu image for the build
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Specify the required version of Node.js
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install  # Install the dependencies for the frontend
+
+      # Step 4: Build the frontend application
+      - name: Build the app
+        run: npm run build  # Build the production-ready app
+
+      # Step 5: Deploy the app to your VPS using SSH
       - name: Deploy to VPS via SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
-          VPS_USER: ${{ secrets.VPS_USER }}  
-          VPS_HOST: ${{ secrets.VPS_HOST }}  
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Your SSH private key from GitHub Secrets
+          VPS_USER: ${{ secrets.VPS_USER }}  # Your VPS username (e.g., root)
+          VPS_HOST: ${{ secrets.VPS_HOST }}  # Your VPS IP address or domain
         run: |
           # Ensure .ssh directory exists
           mkdir -p ~/.ssh
