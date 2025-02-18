@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 export default function Home() {
+  console.log("hello");
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
    useEffect(() => {
