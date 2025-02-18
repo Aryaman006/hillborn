@@ -1,44 +1,23 @@
-name: Deploy Frontend to VPS
-
-on:
-  push:
-    branches:
-      - main  # Trigger deployment on push to main branch
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'  
-
-      - name: Install dependencies
-        run: npm install  
-
-      - name: Build the app
-        run: npm run build  
-
       - name: Deploy to VPS via SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
           VPS_USER: ${{ secrets.VPS_USER }}  
           VPS_HOST: ${{ secrets.VPS_HOST }}  
         run: |
-          # Save SSH private key and set permissions
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem  
+          # Ensure .ssh directory exists
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Save SSH private key and set correct permissions
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private_key.pem
+          chmod 600 ~/.ssh/private_key.pem  
 
           # Add the VPS to known hosts to prevent SSH host verification prompt
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts  # Set correct permissions for known_hosts
 
           # Connect to the VPS and execute deployment commands
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST <<EOF
+          ssh -i ~/.ssh/private_key.pem -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST <<EOF
           cd /hillborn  # Adjust to your project directory
           git pull origin main  
           npm install  
