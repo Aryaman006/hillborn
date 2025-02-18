@@ -58,3 +58,4 @@ jobs:
 
             # Optionally, restart Nginx if you're using it as a reverse proxy
             sudo systemctl restart nginx
+            EOF
