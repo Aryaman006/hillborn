@@ -10,6 +10,7 @@ import { setLoginStatus } from "@/redux/action";
 
 export default function Header() {
   const dispatch = useDispatch();
+  console.log("hello");
   const router = useRouter();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthFormOpen, setAuthFormOpen] = useState(false);
