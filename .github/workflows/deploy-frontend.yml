@@ -3,59 +3,46 @@ name: Deploy Frontend to VPS
 on:
   push:
     branches:
-      - main  # This triggers the pipeline on push to the 'main' branch (adjust if using a different branch)
+      - main  # Trigger deployment on push to main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu image for the build
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'  # Specify the required version of Node.js (adjust if needed)
+          node-version: '18'  
 
-      # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install  # This will install the dependencies for the frontend
+        run: npm install  
 
-      # Step 4: Build the frontend application (adjust if needed)
       - name: Build the app
-        run: npm run build  # This command builds the production-ready app
+        run: npm run build  
 
-      # Step 5: Deploy the app to your VPS using SSH
       - name: Deploy to VPS via SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Your SSH private key from GitHub Secrets
-          VPS_USER: ${{ secrets.VPS_USER }}  # Your VPS username (e.g., root)
-          VPS_HOST: ${{ secrets.VPS_HOST }}  # Your VPS IP address or domain
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
+          VPS_USER: ${{ secrets.VPS_USER }}  
+          VPS_HOST: ${{ secrets.VPS_HOST }}  
         run: |
-          # Save the private SSH key from GitHub Secrets to a file
+          # Save SSH private key and set permissions
           echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem  # Secure the private key
+          chmod 600 private_key.pem  
 
-          # SSH into the VPS and deploy the frontend
-          ssh -i private_key.pem $VPS_USER@$VPS_HOST << 'EOF'
-            # Navigate to the directory where the frontend is located
-            cd /hillborn  # Adjust the path to your frontend directory
+          # Add the VPS to known hosts to prevent SSH host verification prompt
+          ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
 
-            # Pull the latest changes from GitHub
-            git pull origin main  # Use the appropriate branch name
-
-            # Install any new dependencies (if any)
-            npm install
-
-            # Build the frontend (if not already built in the pipeline)
-            npm run build
-
-            # Restart the application using PM2 or another process manager (if used)
-            pm2 restart nextjs-app  # Adjust to the correct name of your Next.js app in PM2
-
-            # Optionally, restart Nginx if you're using it as a reverse proxy
-            sudo systemctl restart nginx
-            EOF
+          # Connect to the VPS and execute deployment commands
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST <<EOF
+          cd /hillborn  # Adjust to your project directory
+          git pull origin main  
+          npm install  
+          npm run build  
+          pm2 restart nextjs-app  
+          sudo systemctl restart nginx  
+          EOF
