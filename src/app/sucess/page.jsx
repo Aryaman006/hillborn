@@ -2,12 +2,16 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 
 const PaymentSuccess = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+  console.log(type);
+  
   const [paymentStatus, setPaymentStatus] = useState(null);
   const hasVerified = useRef(false); // Prevent multiple calls
 
@@ -18,7 +22,7 @@ const PaymentSuccess = () => {
 
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/verify`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${type}/verify`,
           {},
           { withCredentials: true }
         );

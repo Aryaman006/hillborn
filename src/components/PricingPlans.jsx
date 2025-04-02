@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function PricingPlans() {
   const [selectedPlan, setSelectedPlan] = useState("growth");
@@ -16,7 +18,7 @@ export default function PricingPlans() {
 
   // Pricing details in INR (base currency)
   const pricing = {
-    starter: { monthly: 5999, yearly: 59999 },
+    starter: { monthly: 1, yearly: 1 },
     growth: { monthly: 9999, yearly: 99999 },
     premium: { monthly: 14999, yearly: 149999 },
   };
@@ -31,6 +33,30 @@ export default function PricingPlans() {
   const togglePlanType = () => setIsMonthly(!isMonthly);
 
   const handleCurrencyChange = (e) => setCurrency(e.target.value);
+  const handleBuySubscription = async (price) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/subscription/create`,
+        { amount: price },
+        { withCredentials: true }
+      );
+  
+      console.log("Payment Response:", response.data);
+  
+      const paymentUrl = response.data.paymentResponse?.data?.instrumentResponse?.redirectInfo?.url;
+  
+      if (response.data.success && paymentUrl) {
+        toast.success("Redirecting to payment...");
+        window.location.href = paymentUrl;
+      } else {
+        toast.error("Failed to initiate payment. No redirect URL found.");
+      }
+    } catch (error) {
+      console.error("Subscription initiation failed", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+  
 
   return (
     <section className="bg-gray-100 py-12">
@@ -158,6 +184,7 @@ export default function PricingPlans() {
                     ? "bg-white text-gray-900"
                     : "bg-gradient-to-r from-gray-700 to-gray-900 text-white"
                 } mt-6 w-full py-2 font-medium rounded-lg`}
+                onClick={() => handleBuySubscription(isMonthly ? pricing[plan].monthly : pricing[plan].yearly)}
               >
                 Get Started
               </button>
