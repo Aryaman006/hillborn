@@ -29,7 +29,6 @@ const WebsiteSelector = () => {
     fetchTemplates();
   }, []);
 
-  // Group templates by industry
   const groupedTemplates = templates.reduce((acc, template) => {
     acc[template.industry] = acc[template.industry] || [];
     acc[template.industry].push(template);
@@ -69,6 +68,26 @@ const WebsiteSelector = () => {
     autoplaySpeed: 2000,
     pauseOnHover: false,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   const handlePreview = (url) => window.open(url, "_blank");
