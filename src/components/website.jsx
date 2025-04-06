@@ -102,35 +102,38 @@ const WebsiteSelector = () => {
           <Slider {...settings}>
             {groupedTemplates[industry].map((template) => (
               <div key={template._id} className="px-2">
-                <div className="border border-gray-200 rounded-2xl shadow-md bg-white p-6 transition-transform transform hover:scale-105">
-                  <div className="relative w-full h-[180px]">
+                <div className="h-[400px] border border-gray-200 rounded-2xl shadow-md bg-white overflow-hidden transition-transform transform hover:scale-105">
+                  <div className="h-3/5 relative">
                     <Image
                       src={template.image}
                       alt={template.name}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-lg"
+                      fill
+                      className="object-cover rounded-t-2xl"
                     />
                   </div>
-                  <h3 className="text-xl font-semibold mt-4 text-gray-900">
-                    {template.name}
-                  </h3>
-                  <p className="text-lg text-gray-700 font-medium">
-                    ₹{template.price}
-                  </p>
-                  <div className="flex mt-4 space-x-4">
-                    <button
-                      className="border border-gray-300 px-5 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
-                      onClick={() => handlePreview(template.previewUrl)}
-                    >
-                      Preview
-                    </button>
-                    <button
-                      className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-900 transition"
-                      onClick={() => handleBuyNow(template)}
-                    >
-                      Buy Now
-                    </button>
+                  <div className="h-2/5 p-4 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {template.name}
+                      </h3>
+                      <p className="text-lg text-gray-700 font-medium">
+                        ₹{template.price}
+                      </p>
+                    </div>
+                    <div className="flex mt-3 space-x-4">
+                      <button
+                        className="border border-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+                        onClick={() => handlePreview(template.previewUrl)}
+                      >
+                        Preview
+                      </button>
+                      <button
+                        className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition"
+                        onClick={() => handleBuyNow(template)}
+                      >
+                        Buy Now
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
