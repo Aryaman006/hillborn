@@ -15,12 +15,11 @@ export default function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthFormOpen, setAuthFormOpen] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
-   const { isLoggedIn, role } = useSelector((state) => ({
+  const { isLoggedIn, role } = useSelector((state) => ({
     isLoggedIn: state.isLoggedIn,
     role: state.role,
   }));
 
-  
   const toggleForm = () => setIsRegister((prev) => !prev);
 
   const closeAuthForm = () => {
@@ -35,32 +34,30 @@ export default function Header() {
       );
       if (response.ok) {
         dispatch(setLoginStatus(false, null));
-      
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
-const navigateToSection = (id) => {
-  // Check if already on the homepage, else navigate to it first
-  if (window.location.pathname !== "/") {
-    router.push("/").then(() => {
+  const navigateToSection = (id) => {
+    // Check if already on the homepage, else navigate to it first
+    if (window.location.pathname !== "/") {
+      router.push("/").then(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: "smooth",
+        });
+      });
+    } else {
+      // If already on homepage, directly scroll to the section
       document.getElementById(id)?.scrollIntoView({
         behavior: "smooth",
       });
-    });
-  } else {
-    // If already on homepage, directly scroll to the section
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }
+    }
 
-  // Close mobile menu if open
-  setMobileMenuOpen(false);
-};
+    // Close mobile menu if open
+    setMobileMenuOpen(false);
+  };
 
   // const navigateToSection = (id) => {
   //   document.getElementById(id)?.scrollIntoView({
@@ -116,19 +113,17 @@ const navigateToSection = (id) => {
           {isLoggedIn ? (
             <>
               <FaUserCircle
-  size={24}
-  className="text-gray-600 hover:text-black cursor-pointer"
-  onClick={() => {
-    if (role === "admin") {
-      router.push("/admin");
-    } else {
-      router.push("/account");
-    }
-  }}
-/>
-                             
-                
-             
+                size={24}
+                className="text-gray-600 hover:text-black cursor-pointer"
+                onClick={() => {
+                  if (role === "admin") {
+                    router.push("/admin");
+                  } else {
+                    router.push("/account");
+                  }
+                }}
+              />
+
               <button
                 className="border px-4 py-2 rounded-lg text-black hover:bg-gray-200 transition-colors duration-200"
                 onClick={handleLogout}
@@ -209,22 +204,18 @@ const navigateToSection = (id) => {
             {isLoggedIn ? (
               <>
                 <FaUserCircle
-  size={24}
-  className="text-gray-600 hover:text-black cursor-pointer"
-  onClick={() => {
-    if (role === "admin") {
-      router.push("/admin");
-    } else {
-      router.push("/account");
- setMobileMenuOpen(false);
-    }
-  }}
-/>
+                  size={24}
+                  className="text-gray-600 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    if (role === "admin") {
+                      router.push("/admin");
+                    } else {
+                      router.push("/account");
+                      setMobileMenuOpen(false);
+                    }
+                  }}
+                />
 
-                                                             
-                
-                
-                
                 <button
                   className="border px-6 py-3 rounded-lg text-black hover:bg-gray-200 transition-colors duration-200"
                   onClick={handleLogout}
@@ -270,7 +261,11 @@ const navigateToSection = (id) => {
             >
               <FaTimes size={20} />
             </button>
-            <AuthForm isRegister={isRegister} toggleForm={toggleForm} />
+            <AuthForm
+              isRegister={isRegister}
+              closeAuthForm={closeAuthForm}
+              toggleForm={toggleForm}
+            />
           </div>
         </div>
       )}

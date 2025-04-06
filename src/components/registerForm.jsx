@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoginStatus } from "@/redux/action";
 
-export default function AuthForm({ isRegister, toggleForm }) {
+export default function AuthForm({ isRegister, toggleForm, closeAuthForm }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
-const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
@@ -18,16 +18,20 @@ const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     console.log("enter");
-  
+
     const params = new URLSearchParams(window.location.search);
     const status = params.get("status");
-  
+
     // If the status query param exists
     if (status) {
       // Immediately update the history to remove 'status' param
       params.delete("status");
-      window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
-  
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}?${params.toString()}`
+      );
+
       // Now handle the login status
       if (status === "success") {
         dispatch(setLoginStatus(true));
@@ -36,8 +40,7 @@ const [profile, setProfile] = useState(null);
         toast.error("Login failed");
       }
     }
-  }, [dispatch]);  // Runs once on component mount and whenever `dispatch` changes
-  
+  }, [dispatch]); // Runs once on component mount and whenever `dispatch` changes
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,22 +51,25 @@ const [profile, setProfile] = useState(null);
   };
 
   const fetchProfile = async () => {
-console.log("enter")
+    console.log("enter");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/profile`, {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/profile`,
+        {
+          credentials: "include",
+        }
+      );
       if (!response.ok) throw new Error("Failed to fetch profile");
-      
+
       const data = await response.json();
-     console.log("data",data)
+      console.log("data", data);
       dispatch(setLoginStatus(true, data.roles));
       setProfile(data);
       setUserRole(data.roles || null);
     } catch (error) {
       console.error(error.message);
     }
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,10 +93,14 @@ console.log("enter")
       });
 
       const result = await response.json();
-      if (!response.ok) throw new Error(result.message || "Something went wrong");
+      if (!response.ok)
+        throw new Error(result.message || "Something went wrong");
 
       dispatch(setLoginStatus(true));
-      toast.success(isRegister ? "Account created successfully!" : "Logged in successfully!");
+      toast.success(
+        isRegister ? "Account created successfully!" : "Logged in successfully!"
+      );
+      closeAuthForm();
       await fetchProfile();
     } catch (error) {
       toast.error(error.message);
@@ -162,7 +172,10 @@ console.log("enter")
               {loading ? "Processing..." : "Sign Up with Google"}
             </button>
           </div>
-          <p className="text-center text-sm text-gray-600 mt-4 cursor-pointer" onClick={toggleForm}>
+          <p
+            className="text-center text-sm text-gray-600 mt-4 cursor-pointer"
+            onClick={toggleForm}
+          >
             Already have an account? Log In
           </p>
         </div>
@@ -210,7 +223,10 @@ console.log("enter")
               {loading ? "Processing..." : "Log In with Google"}
             </button>
           </div>
-          <p className="text-center text-sm text-gray-600 mt-4 cursor-pointer" onClick={toggleForm}>
+          <p
+            className="text-center text-sm text-gray-600 mt-4 cursor-pointer"
+            onClick={toggleForm}
+          >
             Don't have an account? Sign Up
           </p>
         </div>
