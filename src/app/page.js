@@ -12,7 +12,7 @@ import EndlessScroll from "@/components/test";
 import EndlessScrollUp from "@/components/test2";
 import WebsiteTypeSelector from "@/components/website";
 import Image from "next/image";
-import ContactForm from "./digitalSolutions/components/ContactForm";
+import ContactForm from "./digitaldataSolutions/components/ContactForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoginStatus } from "@/redux/action";
 import { useEffect } from "react";

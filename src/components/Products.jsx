@@ -17,7 +17,7 @@ export default function FutureProducts() {
           {/* First Image Block */}
           <div className="rounded-lg overflow-hidden col-span-1">
             <Image
-              src="/images/p6.png"
+              src="/images/p6.svg"
               alt="Book an Exclusive"
               width={300}
               height={150}
@@ -28,7 +28,7 @@ export default function FutureProducts() {
           {/* Second Image Block */}
           <div className="rounded-lg overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
             <Image
-              src="/images/p5.png"
+              src="/images/p5.svg"
               alt="Minimal Chair"
               width={300}
               height={100}
@@ -39,7 +39,7 @@ export default function FutureProducts() {
           {/* Third Image Block */}
           <div className="rounded-lg overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
             <Image
-              src="/images/p1.png"
+              src="/images/p1.svg"
               alt="Elevate Your Experience"
               width={300}
               height={50}
@@ -48,31 +48,31 @@ export default function FutureProducts() {
           </div>
 
           {/* Fourth Image Block */}
-          <div className="rounded-lg md:mt-[-130px] overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
+          <div className="rounded-lg md:mt-[-10px] overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
             <Image
-              src="/images/p2.png"
+              src="/images/p2.svg"
               alt="Explore The World"
-              width={400}
-              height={250}
+              width={300}
+              height={150}
               className="w-full h-auto object-cover"
             />
           </div>
 
           {/* Fifth Image Block */}
-          <div className="rounded-lg overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
+          <div className="rounded-lg md:mt-[-10px] overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
             <Image
-              src="/images/p3.png"
+              src="/images/p3.svg"
               alt="To Travel Is To Live"
-              width={400}
-              height={250}
+              width={300}
+              height={150}
               className="w-full h-auto object-cover"
             />
           </div>
 
           {/* Sixth Image Block */}
-          <div className="rounded-lg md:mt-[-250px] overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
+          <div className="rounded-lg md:mt-[-10px] overflow-hidden col-span-1 sm:col-span-2 lg:col-span-1">
             <Image
-              src="/images/p4.png"
+              src="/images/p4.svg"
               alt="Future Innovations"
               width={300}
               height={200}

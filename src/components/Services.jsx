@@ -4,11 +4,11 @@ import Link from "next/link"; // Import Link from Next.js
 const services = [
   {
     id: 1,
-    title: "Digital Solution",
+    title: "Digital Data Solution",
     description:
       "Tailored solutions for enterprise software, IT consulting, and seamless integration to drive business innovation.",
     icon: "/images/image4.png",
-    link: "/digitalSolutions",
+    link: "/digitaldataSolutions",
   },
   {
     id: 2,

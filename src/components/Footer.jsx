@@ -1,8 +1,15 @@
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+  FaWhatsapp,
+} from 'react-icons/fa';
 
 export default function Footer() {
   console.log(process.env.MONGODB_URI);
-  
+
   return (
     <footer className="bg-white border-t border-gray-200 p-6 md:p-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,25 +23,6 @@ export default function Footer() {
 
           {/* Links Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full md:w-auto">
-            {/* Product */}
-            {/* <div>
-              <h4 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-4">
-                Product
-              </h4>
-              <ul className="space-y-2">
-                {['Features', 'Pricing', 'Case studies', 'Reviews', 'Updates'].map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
-
             {/* Company */}
             <div>
               <h4 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-4">
@@ -86,15 +74,36 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2">
                 {[
-                  { name: 'Facebook', icon: FaFacebookF, color: 'text-blue-600', link: 'https://www.facebook.com/profile.php?id=61556896286817&mibextid=ZbWKwL' },
-                  { name: 'Twitter', icon: FaTwitter, color: 'text-blue-400', link: 'https://x.com/Hillborntech' },
-                  { name: 'Instagram', icon: FaInstagram, color: 'text-pink-500', link: 'https://www.instagram.com/hillborn_technologies?igsh=MWxnY3MyMjU1aHV0OA==' },
-                  // { name: 'LinkedIn', icon: FaLinkedinIn, color: 'text-blue-700' },
-                  // { name: 'YouTube', icon: FaYoutube, color: 'text-red-600' },
+                  {
+                    name: 'Facebook',
+                    icon: FaFacebookF,
+                    color: 'text-blue-600',
+                    link: 'https://www.facebook.com/profile.php?id=61556896286817&mibextid=ZbWKwL',
+                  },
+                  {
+                    name: 'Twitter',
+                    icon: FaTwitter,
+                    color: 'text-blue-400',
+                    link: 'https://x.com/Hillborntech',
+                  },
+                  {
+                    name: 'Instagram',
+                    icon: FaInstagram,
+                    color: 'text-pink-500',
+                    link: 'https://www.instagram.com/hillborn_technologies?igsh=MWxnY3MyMjU1aHV0OA==',
+                  },
+                  {
+                    name: 'WhatsApp',
+                    icon: FaWhatsapp,
+                    color: 'text-green-500',
+                    link: 'https://wa.me/919353690229?text=Hi%20I%20need%20support', // ✅ Replace with your actual number
+                  },
                 ].map(({ name, icon: Icon, color, link }) => (
                   <li key={name}>
                     <a
                       href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-gray-500 hover:text-gray-700 text-sm flex items-center space-x-2 transition-colors duration-200"
                     >
                       <Icon className={color} />

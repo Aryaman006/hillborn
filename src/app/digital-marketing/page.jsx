@@ -1,11 +1,11 @@
 import ProjectsCarousel from "@/components/carousel";
 import WhyChooseUs from "./components/hero3";
-import Header2 from "../digitalSolutions/components/Header2";
+import Header2 from "../digitaldataSolutions/components/Header2";
 import Services3 from "./components/Services3";
 import FeaturesSection from "./components/future-section";
-import Testimonials from "../digitalSolutions/components/Testimonials";
+import Testimonials from "../digitaldataSolutions/components/Testimonials";
 import Steps from "./components/working";
-import ContactForm from "../digitalSolutions/components/ContactForm";
+import ContactForm from "../digitaldataSolutions/components/ContactForm";
 
 export default function DigitalSolutions () {
     const featuresData = [

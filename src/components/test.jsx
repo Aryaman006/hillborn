@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from "react";
 
 const EndlessScrollDown = () => {
   const images = [
-    "/images/sample1.png",
-    "/images/sample2.png",
-    "/images/sample3.png",
-    "/images/sample4.png",
+    "/images/p1.svg",
+    "/images/p2.svg",
+    "/images/p3.svg",
+    "/images/p6.svg",
   ];
 
   const scrollRef = useRef(null);

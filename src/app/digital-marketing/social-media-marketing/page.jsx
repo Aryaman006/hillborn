@@ -1,10 +1,10 @@
-import Header2 from "@/app/digitalSolutions/components/Header2";
+import Header2 from "@/app/digitaldataSolutions/components/Header2";
 import WhyChooseUs from "../components/hero3";
 import Services3 from "../components/Services3";
 import FeaturesSection from "../components/future-section";
 import ProjectsCarousel from "@/components/carousel";
 import Steps from "../components/working";
-import ContactForm from "@/app/digitalSolutions/components/ContactForm";
+import ContactForm from "@/app/digitaldataSolutions/components/ContactForm";
 
 
 const SocialMedia = () => {

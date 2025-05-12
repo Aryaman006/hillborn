@@ -10,22 +10,18 @@ import { setLoginStatus } from "@/redux/action";
 
 export default function Header() {
   const dispatch = useDispatch();
-  console.log("hello");
   const router = useRouter();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthFormOpen, setAuthFormOpen] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
-   const { isLoggedIn, role } = useSelector((state) => ({
+
+  const { isLoggedIn, role } = useSelector((state) => ({
     isLoggedIn: state.isLoggedIn,
     role: state.role,
   }));
 
-  
   const toggleForm = () => setIsRegister((prev) => !prev);
-
-  const closeAuthForm = () => {
-    setAuthFormOpen(false);
-  };
+  const closeAuthForm = () => setAuthFormOpen(false);
 
   const handleLogout = async () => {
     try {
@@ -35,44 +31,26 @@ export default function Header() {
       );
       if (response.ok) {
         dispatch(setLoginStatus(false, null));
-      
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
-const navigateToSection = (id) => {
-  // Check if already on the homepage, else navigate to it first
-  if (window.location.pathname !== "/") {
-    router.push("/").then(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
+  const navigateToSection = (id) => {
+    if (window.location.pathname !== "/") {
+      router.push("/").then(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
       });
-    });
-  } else {
-    // If already on homepage, directly scroll to the section
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }
-
-  // Close mobile menu if open
-  setMobileMenuOpen(false);
-};
-
-  // const navigateToSection = (id) => {
-  //   document.getElementById(id)?.scrollIntoView({
-  //     behavior: "smooth",
-  //   });
-  //   setMobileMenuOpen(false); // Close menu if on mobile
-  // };
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo */}
         <div className="flex items-center">
           <Image
             src="/images/logo.png"
@@ -83,52 +61,28 @@ const navigateToSection = (id) => {
           />
         </div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6">
-          <button
-            className="text-gray-600 hover:text-black transition-colors duration-200"
-            onClick={() => navigateToSection("hero")}
-          >
-            Home
-          </button>
-          <button
-            className="text-gray-600 hover:text-black transition-colors duration-200"
-            onClick={() => navigateToSection("services")}
-          >
-            Service
-          </button>
-          <button
-            className="text-gray-600 hover:text-black transition-colors duration-200"
-            onClick={() => navigateToSection("about")}
-          >
-            About Us
-          </button>
-          <button
-            className="text-gray-600 hover:text-black transition-colors duration-200"
-            onClick={() => navigateToSection("contact")}
-          >
-            Contact Us
-          </button>
+          {["home", "services", "about", "contact"].map((id) => (
+            <button
+              key={id}
+              className="text-gray-600 hover:text-black transition-colors duration-200"
+              onClick={() => navigateToSection(id)}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </button>
+          ))}
         </nav>
 
-        {/* Call to Action Buttons / Account Section */}
         <div className="hidden md:flex items-center space-x-4">
           {isLoggedIn ? (
             <>
               <FaUserCircle
-  size={24}
-  className="text-gray-600 hover:text-black cursor-pointer"
-  onClick={() => {
-    if (role === "admin") {
-      router.push("/admin");
-    } else {
-      router.push("/account");
-    }
-  }}
-/>
-                             
-                
-             
+                size={24}
+                className="text-gray-600 hover:text-black cursor-pointer"
+                onClick={() => {
+                  router.push(role === "admin" ? "/admin" : "/account");
+                }}
+              />
               <button
                 className="border px-4 py-2 rounded-lg text-black hover:bg-gray-200 transition-colors duration-200"
                 onClick={handleLogout}
@@ -160,7 +114,6 @@ const navigateToSection = (id) => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-black focus:outline-none"
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
@@ -171,7 +124,6 @@ const navigateToSection = (id) => {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="absolute top-0 left-0 w-full bg-white shadow-md z-50">
           <button
@@ -182,49 +134,25 @@ const navigateToSection = (id) => {
             <FaTimes />
           </button>
           <div className="flex flex-col items-center space-y-6 py-4">
-            <button
-              className="text-gray-600 text-xl hover:text-black transition-colors duration-200"
-              onClick={() => navigateToSection("hero")}
-            >
-              Home
-            </button>
-            <button
-              className="text-gray-600 text-xl hover:text-black transition-colors duration-200"
-              onClick={() => navigateToSection("services")}
-            >
-              Service
-            </button>
-            <button
-              className="text-gray-600 text-xl hover:text-black transition-colors duration-200"
-              onClick={() => navigateToSection("about")}
-            >
-              About Us
-            </button>
-            <button
-              className="text-gray-600 text-xl hover:text-black transition-colors duration-200"
-              onClick={() => navigateToSection("contact")}
-            >
-              Contact Us
-            </button>
+            {["home", "services", "about", "contact"].map((id) => (
+              <button
+                key={id}
+                className="text-gray-600 text-xl hover:text-black transition-colors duration-200"
+                onClick={() => navigateToSection(id)}
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </button>
+            ))}
             {isLoggedIn ? (
               <>
                 <FaUserCircle
-  size={24}
-  className="text-gray-600 hover:text-black cursor-pointer"
-  onClick={() => {
-    if (role === "admin") {
-      router.push("/admin");
-    } else {
-      router.push("/account");
- setMobileMenuOpen(false);
-    }
-  }}
-/>
-
-                                                             
-                
-                
-                
+                  size={24}
+                  className="text-gray-600 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    router.push(role === "admin" ? "/admin" : "/account");
+                    setMobileMenuOpen(false);
+                  }}
+                />
                 <button
                   className="border px-6 py-3 rounded-lg text-black hover:bg-gray-200 transition-colors duration-200"
                   onClick={handleLogout}
@@ -260,7 +188,6 @@ const navigateToSection = (id) => {
         </div>
       )}
 
-      {/* AuthForm Modal */}
       {isAuthFormOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
@@ -270,7 +197,11 @@ const navigateToSection = (id) => {
             >
               <FaTimes size={20} />
             </button>
-            <AuthForm isRegister={isRegister} toggleForm={toggleForm} />
+            <AuthForm
+              isRegister={isRegister}
+              toggleForm={toggleForm}
+              closeModal={closeAuthForm}
+            />
           </div>
         </div>
       )}
