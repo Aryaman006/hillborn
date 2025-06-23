@@ -6,7 +6,7 @@ export default function PricingPlans() {
       <img
         src="images/pricing-poster.jpeg" // Replace with your actual image path
         alt="Pricing Poster"
-        className="max-w-4xl h-auto rounded-lg shadow-lg"
+        className="md:max-w-4xl max-w-full h-auto rounded-lg shadow-lg"
       />
     </section>
   );

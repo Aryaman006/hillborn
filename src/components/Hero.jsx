@@ -5,11 +5,11 @@ import EndlessScrollDown from "./test";
 export default function Hero() {
   const images = [
     "/images/sample1.png",
-    "/images/sample1.png",
-    "/images/sample1.png",
-    "/images/sample1.png",
     "/images/sample2.png",
     "/images/sample3.png",
+    "/images/sample4.png",
+    "/images/sample5.png",
+    "/images/sample6.png",
     "/images/sample4.png",
   ];
 

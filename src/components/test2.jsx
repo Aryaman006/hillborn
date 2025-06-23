@@ -2,10 +2,13 @@ import React, { useEffect, useRef } from "react";
 
 const EndlessScrollUp = () => {
   const images = [
-    "/images/p1.svg",
-    "/images/p2.svg",
-    "/images/p3.svg",
-    "/images/p6.svg",
+    "/images/sample1.jpeg",
+    "/images/sample2.jpeg",
+    "/images/sample3.jpeg",
+    "/images/sample4.jpeg",
+    "/images/sample5.jpeg",
+    "/images/sample6.jpeg",
+    "/images/sample4.jpeg",
   ];
 
   const scrollRef = useRef(null);
